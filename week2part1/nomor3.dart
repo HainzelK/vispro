@@ -5,7 +5,7 @@ void deposit(ATM bank){
   print("Deposit brp? ");
   int deposit = int.parse(stdin.readLineSync()!);
   if (deposit < 50000) {
-  print("Minimum deposit is 50,000.");
+  print("Minimum deposit adalah 50,000.");
   return;
   }
   
@@ -17,7 +17,7 @@ void withdraw(ATM bank){
   print('Tarik brp? ');
   int withdraw = int.parse((stdin.readLineSync()!));
   if (withdraw < 50000) {
-  print("Minimum withdrawal is 50,000.");
+  print("Minimum withdrawal adalah 50,000.");
   return;
   }
   
