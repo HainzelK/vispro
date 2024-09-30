@@ -7,7 +7,7 @@ void deposit(BankAccount bank) {
   int deposit = int.parse(stdin.readLineSync()!);
 
   if (deposit < 50000) {
-    print("Minimum deposit is 50,000.");
+    print("Minimum deposit adalah 50,000.");
     return;
   }
 
@@ -20,7 +20,7 @@ void withdraw(BankAccount bank) {
 
 
   if (withdraw < 50000) {
-    print("Minimum withdrawal is 50,000.");
+    print("Minimum withdrawal adalah 50,000.");
     return;
   }
 
