@@ -57,69 +57,7 @@ ListNode insertAtPosition(ListNode head, ListNode newNode, int pos) {
   return head; // Return the updated head
 }
 
-// Function to swap nodes at specified positions
-ListNode exchangeNodes(ListNode head, int pos1, int pos2) {
-  if (pos1 == pos2) return head; // No need to swap identical positions
 
-  ListNode? prevNode1, node1 = head;
-  int index = 1;
-  while (node1 != null && index < pos1) {
-    prevNode1 = node1;
-    node1 = node1.nextNode;
-    index++;
-  }
-
-  ListNode? prevNode2, node2 = head;
-  index = 1;
-  while (node2 != null && index < pos2) {
-    prevNode2 = node2;
-    node2 = node2.nextNode;
-    index++;
-  }
-
-  if (node1 == null || node2 == null) return head; // Nodes not found
-
-  if (prevNode1 != null) {
-    prevNode1.nextNode = node2;
-  } else {
-    head = node2; // Update head if swapping the first node
-  }
-
-  if (prevNode2 != null) {
-    prevNode2.nextNode = node1;
-  } else {
-    head = node1; // Update head if swapping the first node
-  }
-
-  // Swap next pointers of node1 and node2
-  ListNode? temp = node1.nextNode;
-  node1.nextNode = node2.nextNode;
-  node2.nextNode = temp;
-
-  return head; // Return the updated head
-}
-
-// Function to remove a node at a specific position
-ListNode removeNode(ListNode head, int pos) {
-  if (pos == 1) {
-    return head.nextNode ?? head; // Return new head after removing the first node
-  }
-
-  ListNode? current = head;
-  ListNode? previous = null;
-  int index = 1;
-  while (current != null && index < pos) {
-    previous = current;
-    current = current.nextNode;
-    index++;
-  }
-
-  if (current != null && previous != null) {
-    previous.nextNode = current.nextNode; // Link previous node to the next node
-  }
-
-  return head; // Return the updated head
-}
 
 ListNode createCycle(ListNode head) {
   ListNode? current = head;
