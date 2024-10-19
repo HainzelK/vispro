@@ -6,49 +6,57 @@ class Rute {
   Rute(this.value, this.destination);
 }
 
+// Define a Node class to represent each Vertices in the linked list
+class Node {
+  Vertices value; // The Vertices stored in the node
+  Node? next; // Reference to the next node in the linked list
+
+  Node(this.value);
+}
+
 // Define Vertices class, which represents a node
 class Vertices {
   String text; // Name of the node (e.g., A, B, C)
   List<Rute> rutes; // A list of possible rute distances associated with their text
-  Vertices? next; // Reference to the next Vertices in the linked list
 
-  Vertices(this.text, this.rutes, [this.next]);
+  Vertices(this.text, this.rutes);
 }
 
 // Define MyLinkedList class, which contains a linked list of Vertices
 class MyLinkedList {
-  Vertices? head; // Head of the linked list
+  Node? head; // Head of the linked list
   List<List<Rute>> validRoutes = []; // Store valid routes
   List<Rute>? shortestRoute; // Store the shortest route found
 
   // Add a new node with multiple rute values and their associated texts to the linked list
   void append(String text, List<Rute> rutes) {
-    Vertices newNode = Vertices(text, rutes);
+    Vertices newVertex = Vertices(text, rutes);
+    Node newNode = Node(newVertex); // Create a new node with the vertex
 
     if (head == null) {
-      head = newNode; // If list is empty, set head to new node
+      head = newNode; // If the list is empty, set head to new node
     } else {
       // Traverse to the end of the list and add the new node
-      Vertices? current = head;
+      Node? current = head;
       while (current!.next != null) {
         current = current.next;
       }
-      current.next = newNode;
+      current.next = newNode; // Set the new node as the next node
     }
 
     // Add reverse rutes to each node
     for (Rute rute in rutes) {
-      rute.destination.rutes.add(Rute(rute.value, newNode)); // Add the reverse connection
+      rute.destination.rutes.add(Rute(rute.value, newVertex)); // Add the reverse connection
     }
   }
 
   // Function to traverse through each node and calculate valid routes
   void findAllRoutes() {
     // Start from the specified starting node (A)
-    Vertices? startNode = head;
+    Node? startNode = head;
 
     // Find node A
-    while (startNode != null && startNode.text != "A") {
+    while (startNode != null && startNode.value.text != "A") {
       startNode = startNode.next;
     }
 
@@ -57,7 +65,7 @@ class MyLinkedList {
     }
 
     // Call the recursive function starting from node A
-    calculateRoutes([], startNode, {}, 0);
+    calculateRoutes([], startNode.value, {}, 0);
 
     // Output valid routes and the shortest route
     _printValidRoutes();
