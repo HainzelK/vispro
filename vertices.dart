@@ -1,5 +1,3 @@
-
-
 // Define a class to represent a Rute with associated text and destination node
 class Rute {
   final int value; // The distance value of the rute
@@ -12,20 +10,31 @@ class Rute {
 class Vertices {
   String text; // Name of the node (e.g., A, B, C)
   List<Rute> rutes; // A list of possible rute distances associated with their text
+  Vertices? next; // Reference to the next Vertices in the linked list
 
-  Vertices(this.text, this.rutes);
+  Vertices(this.text, this.rutes, [this.next]);
 }
 
 // Define MyLinkedList class, which contains a linked list of Vertices
 class MyLinkedList {
-  List<Vertices> list = []; // Changed to a simple list for easier access
+  Vertices? head; // Head of the linked list
   List<List<Rute>> validRoutes = []; // Store valid routes
   List<Rute>? shortestRoute; // Store the shortest route found
 
-  // Add a new node with multiple rute values and their associated texts
+  // Add a new node with multiple rute values and their associated texts to the linked list
   void append(String text, List<Rute> rutes) {
     Vertices newNode = Vertices(text, rutes);
-    list.add(newNode);
+
+    if (head == null) {
+      head = newNode; // If list is empty, set head to new node
+    } else {
+      // Traverse to the end of the list and add the new node
+      Vertices? current = head;
+      while (current!.next != null) {
+        current = current.next;
+      }
+      current.next = newNode;
+    }
 
     // Add reverse rutes to each node
     for (Rute rute in rutes) {
@@ -36,10 +45,16 @@ class MyLinkedList {
   // Function to traverse through each node and calculate valid routes
   void findAllRoutes() {
     // Start from the specified starting node (A)
-    Vertices startNode = list.firstWhere(
-      (node) => node.text == "A",
-      orElse: () => throw Exception("Start node A not found."),
-    );
+    Vertices? startNode = head;
+
+    // Find node A
+    while (startNode != null && startNode.text != "A") {
+      startNode = startNode.next;
+    }
+
+    if (startNode == null) {
+      throw Exception("Start node A not found.");
+    }
 
     // Call the recursive function starting from node A
     calculateRoutes([], startNode, {}, 0);
